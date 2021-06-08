@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-sm-12">
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="name">Gun Name</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              formControlName="name"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="id">Gun ID</label>
+            <input
+              type="text"
+              id="id"
+              class="form-control"
+              formControlName="id"
+            />
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="price" id="price">Price</label>
+            <input
+              type="text"
+              id="price"
+              class="form-control"
+              formControlName="price"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              type="text"
+              id="description"
+              class="form-control"
+              formControlName="description"
+              rows="7"
+
+            >
+            </textarea> 
+          </div>
+        </div>
+      </div>
+        <div class="col-sm-12">
+          <button
+            
+            type="submit"
+            class="btn btn-success"
+          >
+            Save
+          </button>
+          <button type="button" class="btn btn-danger" style="margin-left: 20px;" (click)="onCancel()">
+            Cancel
+          </button>
+        </div>
+    </form>
+  </div>
+</div>
