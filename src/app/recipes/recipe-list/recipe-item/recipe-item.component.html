@@ -1,32 +1,17 @@
-<a
-  style="cursor: pointer"
-  [routerLink]="[index]"
-  routerLinkActive="active"
-  class="
-    list-group-item list-group-item-action
-    d-flex
-    justify-content-between
-    align-items-center
-  "
->
- <div>
-    <div class="row">
-      <div class="col-5">
-          <h4 class="list-group-item-heading">
-            {{ recipe.id }}
-          </h4>
-          <p class="list-group-item-text">
-            {{ recipe.name }}
-          </p>
-          <p class="list-group-item-text">
-            {{ recipe.price }}
-          </p>
-      </div>
-      <div class="col-5">
-          <img src="{{ recipe.image }}" alt="{{ recipe.name }}">
-      </div>
+<div class="flex-container">
+  <div class="card" style="width: 15rem; margin-right: 15px;">
+    <img src="{{ recipe.image }}" alt="{{ recipe.name }}">
+    <div class="card-body">
+      <h4 class="list-group-item-heading" style="color: black;">
+        {{ recipe.id }}
+      </h4>
+      <p class="list-group-item-text" style="color: black;">
+        {{ recipe.name }}
+      </p>
+      <p class="list-group-item-text" style="color: black;">
+        {{ recipe.price }}
+      </p>
+      <a [routerLink]="[index]" routerLinkActive="active" class="btn btn-primary">See more</a>
     </div>
   </div>
-  <span>
-  </span>
-</a>
+</div>
