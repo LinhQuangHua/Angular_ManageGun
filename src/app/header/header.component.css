@@ -4,3 +4,12 @@ p{
 .demo{
     color:blue;
 }
+.logo
+{
+    width: 9%;
+    padding: 10px;
+}
+.nav.navbar-nav
+{
+    float: right;
+}

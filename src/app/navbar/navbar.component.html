@@ -1,17 +1,50 @@
-<!-- <p>navbar works!</p> -->
+<div class="wrapper" id="topheader">
+  <nav id="sidebar" class="active">
+    <div class="sidebar-header">
+      <h3>GunAir</h3>
+      <strong>GA</strong>
+    </div>
 
-<div class="sidenav">
-  <a class="nav-link text-dark" routerLinkActive="active" routerLink="/home">
-    <img style="width: 100%" src="../../assets/root/logo.png" alt="Logo PikaShop">
-  </a>
-  <hr style="background-color: aliceblue"/>
- <a routerLinkActive="active" routerLink="/"> <i class="fa fa-tachometer" style="color: aliceblue;"></i>  Dashboard</a>
- <hr style="background-color: aliceblue"/>
-  <a routerLinkActive="active" routerLink="/gun"><i class="fa fa-list-alt" style="color: aliceblue;"></i>  Gun</a>
-  <hr style="background-color: aliceblue"/>
-  <a routerLinkActive="active" routerLink="/brand"><i class="fa fa-steam-square" style="color: aliceblue;"></i>  Brands</a>
-  <hr style="background-color: aliceblue"/>
-  <a routerLinkActive="active" routerLink="/brand"><i class="fa fa-list" style="color: aliceblue;"></i>  Category</a>
-  <hr style="background-color: aliceblue"/>
+    <ul class="list-unstyled components">
+      <li>
+        <a routerLinkActive="active" routerLink="/" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fa fa-home"></i>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a routerLinkActive="active" routerLink="/gun">
+          <i class="fa fa-briefcase"></i>
+          Gun
+        </a>
+      </li>
+      <li>
+        <a routerLinkActive="active" routerLink="#">
+          <i class="fa fa-file"></i>
+          Category
+        </a>
+      </li>
+      <li>
+        <a routerLinkActive="active" routerLink="#" id="sidebarCollapse">
+          <i class="fa fa-arrows-h"></i>
+          Portfolio
+        </a>
+      </li>
+      <li>
+        <a routerLinkActive="active" routerLink="#">
+          <i class="fa fa-paperclip"></i>
+          FAQ
+        </a>
+      </li>
+      <li>
+        <a routerLinkActive="active" routerLink="#">
+          <i class="fa fa-send"></i>
+          Contact
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div id="content">
+    <router-outlet></router-outlet>
+  </div>
 </div>
-
