@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-sm-12">
+        <button class="btn btn-success" (click)="onNewCate()">Add New Category</button>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-sm-12">
+        <div class="flex-container">
+            <app-cate-item *ngFor="let cateItem of cates; let i = index" [cate]="cateItem" [index]="i">
+            </app-cate-item>
+        </div>
+    </div>
+</div>

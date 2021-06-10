@@ -671,14 +671,14 @@ body.bg-theme15 {
 
 .user-details .media .media-body .user-title {
   font-size: 14px;
-  color: #fff;
+  color: rgb(0, 0, 0);
   font-weight: 600;
   margin-bottom: 2px;
 }
 
 .user-details .media .media-body .user-subtitle {
   font-size: 13px;
-  color: #ffffff;
+  color: #000000;
   margin-bottom: 0;
   
 }

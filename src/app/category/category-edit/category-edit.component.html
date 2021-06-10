@@ -1,0 +1,34 @@
+<h2>Category of Information</h2>
+<hr>
+<div class="row">
+    <div class="col-sm-12">
+        <form [formGroup]="cateForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="name">Gun Category</label>
+                        <input type="text" id="name" class="form-control" formControlName="name_cate" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="id">Gun Category</label>
+                        <input type="text" id="id" class="form-control" formControlName="id_cate" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-success">
+                    Save
+                </button>
+                <button type="button" class="btn btn-danger" style="margin-left: 20px;" (click)="onCancel()">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

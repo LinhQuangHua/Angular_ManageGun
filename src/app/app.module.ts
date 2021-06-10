@@ -13,6 +13,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { CategoryComponent } from './category/category.component';
+import { CategoryListComponent } from './category/category-list/category-list.component';
+import { CategoryEditComponent } from './category/category-edit/category-edit.component';
+import { CateItemComponent } from './category/category-list/cate-item/cate-item.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,10 @@ import { NavbarComponent } from './navbar/navbar.component';
     RecipeStartComponent,
     RecipeEditComponent,
     NavbarComponent,
+    CategoryComponent,
+    CategoryListComponent,
+    CategoryEditComponent,
+    CateItemComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule],
   providers: [RecipeService],

@@ -1,0 +1,13 @@
+<div class="flex-container">
+    <div class="card" style="width: 15rem; margin-right: 15px;">
+        <div class="card-body">
+            <h4 class="list-group-item-heading">
+                {{ cate.id_cate }}
+            </h4>
+            <p class="list-group-item-text">
+                {{ cate.name_cate }}
+            </p>
+            <a [routerLink]="[index]" routerLinkActive="active" class="btn btn-primary">Edit</a>
+        </div>
+    </div>
+</div>
