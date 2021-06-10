@@ -2,13 +2,13 @@
   <div class="card" style="width: 15rem; margin-right: 15px;">
     <img src="{{ recipe.image }}" alt="{{ recipe.name }}">
     <div class="card-body">
-      <h4 class="list-group-item-heading" style="color: black;">
+      <h4 class="list-group-item-heading">
         {{ recipe.id }}
       </h4>
-      <p class="list-group-item-text" style="color: black;">
+      <p class="list-group-item-text">
         {{ recipe.name }}
       </p>
-      <p class="list-group-item-text" style="color: black;">
+      <p class="list-group-item-text">
         {{ recipe.price }}
       </p>
       <a [routerLink]="[index]" routerLinkActive="active" class="btn btn-primary">See more</a>

@@ -1,62 +1,44 @@
+<h2>Detail Weapon</h2>
+<hr>
 <div class="row">
   <div class="col-sm-12">
     <h2>{{ recipe?.id }}</h2>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-sm-12">
     <h4>{{ recipe?.name }}</h4>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-sm-12">
     <h4><img src="{{ recipe?.image }}" alt="{{ recipe?.name }}"></h4>
   </div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-sm-12">{{ recipe?.price }}</div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-sm-7">{{ recipe?.description }}</div>
 </div>
-<br/>
+<br />
 <div class="row">
   <div class="col-sm-12">
-    <div
-      class="btn-group"
-      role="group"
-      aria-label="Button group with nested dropdown"
-    >
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
       <div class="btn-group" role="group" appDropdown>
-        <button
-          id="btnGroupDrop1"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-          type="button"
+        <button id="btnGroupDrop1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" type="button"
           class="btn btn-primary dropdown-toggle">
           Manage Gun
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a
-            class="dropdown-item"
-            (click)="onEditRecipe()"
-            style="cursor: pointer"
-            >Edit Item</a
-          >
-          <a
-            class="dropdown-item"
-            style="cursor: pointer"
-            (click)="onDeleteRecipe()"
-            >Delete Item</a
-          >
+          <a class="dropdown-item" (click)="onEditRecipe()" style="cursor: pointer">Edit Item</a>
+          <a class="dropdown-item" style="cursor: pointer" (click)="onDeleteRecipe()">Delete Item</a>
         </div>
       </div>
     </div>
   </div>
 </div>
-

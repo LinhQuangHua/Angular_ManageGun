@@ -4,3 +4,12 @@
    flex-direction: row 
 }
 
+.card
+{
+  background-color: #ffffff5e
+}
+
+.list-group-item-text
+{
+  color: white;;
+}
