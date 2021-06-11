@@ -49,13 +49,24 @@ export class RecipeEditComponent implements OnInit {
     });
   }
 
+
   onSubmit() {
-    if (this.editMode) {
+    if (!this.recipeForm.get('id').value
+      && !this.recipeForm.get('name').value
+      && !this.recipeForm.get('price').value
+      && !this.recipeForm.get('description').value) { window.alert("The form can' t null!") }
+    else if (!this.recipeForm.get('id').value
+      || !this.recipeForm.get('name').value
+      || !this.recipeForm.get('price').value
+      || !this.recipeForm.get('description').value) { window.alert("Gun' information fields can' t null!") }
+    else if (this.editMode) {
       this.recipeService.updateRecipe(this.id, this.recipeForm.value);
-    } else {
-      this.recipeService.addRecipe(this.recipeForm.value);
+      this.onCancel();
     }
-    this.onCancel();
+    else {
+      this.recipeService.addRecipe(this.recipeForm.value);
+      this.onCancel();
+    }
   }
 
   onCancel() {

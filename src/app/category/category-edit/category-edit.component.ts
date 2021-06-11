@@ -45,10 +45,7 @@ export class CategoryEditComponent implements OnInit {
   }
 
   onSubmit() {
-    // !this.cateForm.get('id_cate').value && !this.cateForm.get('name_cate').value ? window.alert("The form can' t null!") : "";
-    // this.cateForm.get('id_cate').value == null ? window.alert("Category' Id can' t null!") : "";
-    // this.cateForm.get('name_cate').value == null ? window.alert("Category' name can' t null!") : "";
-    // console.log(this.cateForm.get('name_cate').value, this.cateForm.get('id_cate').value)
+
     if (!this.cateForm.get('id_cate').value && !this.cateForm.get('name_cate').value) { window.alert("The form can' t null!") }
     else if (!this.cateForm.get('id_cate').value) { window.alert("Category' Id can' t null!") }
     else if (!this.cateForm.get('name_cate').value) { window.alert("Category' name can' t null!") }
