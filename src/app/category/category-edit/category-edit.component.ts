@@ -10,6 +10,8 @@ import { CateService } from '../category.service';
 })
 export class CategoryEditComponent implements OnInit {
   id: number;
+  cateName: string;
+  cateID: string;
   editMode = false;
   cateForm: FormGroup;
   constructor(
@@ -26,30 +28,37 @@ export class CategoryEditComponent implements OnInit {
     });
   }
   private initForm() {
-    let cateName = '';
-    let cateID = '';
 
     if (this.editMode) {
       const cate = this.cateService.getCate(this.id);
-      cateName = cate?.name_cate;
-      cateID = cate?.id_cate;
+      this.cateName = cate?.name_cate;
+      this.cateID = cate?.id_cate;
 
     }
     this.cateForm = new FormGroup({
 
-      name_cate: new FormControl(cateName, Validators.required),
-      id_cate: new FormControl(cateID, Validators.required),
+      name_cate: new FormControl(this.cateName, Validators.required),
+      id_cate: new FormControl(this.cateID, Validators.required),
 
     });
+
   }
 
   onSubmit() {
-    if (this.editMode) {
+    // !this.cateForm.get('id_cate').value && !this.cateForm.get('name_cate').value ? window.alert("The form can' t null!") : "";
+    // this.cateForm.get('id_cate').value == null ? window.alert("Category' Id can' t null!") : "";
+    // this.cateForm.get('name_cate').value == null ? window.alert("Category' name can' t null!") : "";
+    // console.log(this.cateForm.get('name_cate').value, this.cateForm.get('id_cate').value)
+    if (!this.cateForm.get('id_cate').value && !this.cateForm.get('name_cate').value) { window.alert("The form can' t null!") }
+    else if (!this.cateForm.get('id_cate').value) { window.alert("Category' Id can' t null!") }
+    else if (!this.cateForm.get('name_cate').value) { window.alert("Category' name can' t null!") }
+    else if (this.editMode) {
       this.cateService.updateCate(this.id, this.cateForm.value);
+      this.onCancel();
     } else {
       this.cateService.addCate(this.cateForm.value);
+      this.onCancel();
     }
-    this.onCancel();
   }
 
   onCancel() {
