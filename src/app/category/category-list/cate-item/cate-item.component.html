@@ -1,13 +1,9 @@
-<div class="flex-container">
-    <div class="card" style="width: 15rem; margin-right: 15px;">
-        <div class="card-body">
-            <h4 class="list-group-item-heading">
-                {{ cate.id_cate }}
-            </h4>
-            <p class="list-group-item-text">
-                {{ cate.name_cate }}
-            </p>
-            <a [routerLink]="[index]" routerLinkActive="active" class="btn btn-primary">Edit</a>
-        </div>
-    </div>
-</div>
+<tr>
+    <th scope="row">{{index}}</th>
+    <td>{{ cate.id_cate }}</td>
+    <td style="width: 30%;">{{ cate.name_cate }}</td>
+    <td><a (click)="onEditCate([index])" class="btn btn-primary">Edit</a>&nbsp;
+        <a (click)="onDeleteCate([index])" class="btn btn-danger">Delete</a>
+    </td>
+</tr>
+<br>

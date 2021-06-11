@@ -3,3 +3,11 @@
   flex-wrap: wrap;
   flex-direction: row 
 }
+.card{
+  background-color: transparent;
+  color: white;
+}
+tr th
+{
+  color: white;
+}

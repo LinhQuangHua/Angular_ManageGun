@@ -28,7 +28,6 @@ export class RecipeEditComponent implements OnInit {
   private initForm() {
     let recipeName = '';
     let recipeID = '';
-
     let recipePrice = '';
     let recipeDescription = '';
 
@@ -36,7 +35,6 @@ export class RecipeEditComponent implements OnInit {
       const recipe = this.recipeService.getRecipe(this.id);
       recipeName = recipe?.name;
       recipeID = recipe?.id;
-
       recipePrice = recipe?.price;
       recipeDescription = recipe?.description;
 
@@ -61,7 +59,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['/gun'], { relativeTo: this.route });
   }
 
 }

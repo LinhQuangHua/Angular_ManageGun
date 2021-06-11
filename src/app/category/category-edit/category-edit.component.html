@@ -1,4 +1,4 @@
-<h2>Category of Information</h2>
+<h2 style="margin-top: 57px;">Category of Information</h2>
 <hr>
 <div class="row">
     <div class="col-sm-12">
@@ -8,27 +8,25 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <label for="name">Gun Category</label>
-                        <input type="text" id="name" class="form-control" formControlName="name_cate" />
+                        <label for="id">Category ID</label>
+                        <input type="text" id="id_cate" class="form-control" formControlName="id_cate" required>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <label for="id">Gun Category</label>
-                        <input type="text" id="id" class="form-control" formControlName="id_cate" />
+                        <label for="name">Category Name</label>
+                        <input type="text" id="name_cate" class="form-control" formControlName="name_cate" required>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-12">
-                <button type="submit" class="btn btn-success">
-                    Save
-                </button>
-                <button type="button" class="btn btn-danger" style="margin-left: 20px;" (click)="onCancel()">
-                    Cancel
-                </button>
-            </div>
+            <button type="submit" class="btn btn-success">
+                Save
+            </button>&nbsp;
+            <button type="button" class="btn btn-danger" (click)="onCancel()">
+                Cancel
+            </button>
         </form>
     </div>
 </div>

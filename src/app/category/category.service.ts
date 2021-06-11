@@ -8,20 +8,20 @@ export class CateService {
     cateSelected = new EventEmitter<Category>();
     private cates: Category[] = [
         new Category(
-            'Pistol-0001',
-            'Beretta 92a',
+            'Weapon-0001',
+            'Gun',
         ),
         new Category(
-            'Pistol-0002',
-            '92FS',
+            'Weapon-0002',
+            'Boom',
         ),
         new Category(
-            'Pistol-0003',
-            '92G',
+            'Weapon-0003',
+            'Armor',
         ),
         new Category(
-            'Pistol-0004',
-            'Beretta 92a-12',
+            'Weapon-0004',
+            'Rocket',
         ),
     ];
 

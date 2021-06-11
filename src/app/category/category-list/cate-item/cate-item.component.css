@@ -1,15 +1,4 @@
-.flex-container {
-  display: flex;
-  flex-wrap: nowrap;
-   flex-direction: row 
-}
-
-.card
+tr td, th
 {
-  background-color: #ffffff5e
-}
-
-.list-group-item-text
-{
-  color: white;;
+  color: white;
 }

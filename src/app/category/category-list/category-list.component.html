@@ -1,5 +1,6 @@
 <div class="row">
     <div class="col-sm-12">
+        <h1 style="text-align: center;">List Category</h1>
         <button class="btn btn-success" (click)="onNewCate()">Add New Category</button>
     </div>
 </div>
@@ -7,8 +8,28 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="flex-container">
-            <app-cate-item *ngFor="let cateItem of cates; let i = index" [cate]="cateItem" [index]="i">
-            </app-cate-item>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Hover Table</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col"># &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        Category ID
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        Category name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <app-cate-item *ngFor="let cateItem of cates; let i = index" [cate]="cateItem"
+                                    [index]="i">
+                                </app-cate-item>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

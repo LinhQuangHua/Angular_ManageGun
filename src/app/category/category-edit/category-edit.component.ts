@@ -37,8 +37,8 @@ export class CategoryEditComponent implements OnInit {
     }
     this.cateForm = new FormGroup({
 
-      name: new FormControl(cateName, Validators.required),
-      id: new FormControl(cateID, Validators.required),
+      name_cate: new FormControl(cateName, Validators.required),
+      id_cate: new FormControl(cateID, Validators.required),
 
     });
   }
@@ -53,7 +53,7 @@ export class CategoryEditComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['/category'], { relativeTo: this.route });
   }
 
 }
