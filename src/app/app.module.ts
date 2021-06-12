@@ -19,6 +19,10 @@ import { CategoryEditComponent } from './category/category-edit/category-edit.co
 import { CateItemComponent } from './category/category-list/cate-item/cate-item.component';
 import { ToastrModule } from 'ngx-toastr';
 
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,17 +40,23 @@ import { ToastrModule } from 'ngx-toastr';
     CategoryEditComponent,
     CateItemComponent,
   ],
-  imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule,
-    ToastrModule.forRoot(
-      {
-        timeOut: 2000,
-        positionClass: 'toast-top-right',
-        progressBar: true,
-        progressAnimation: 'increasing',
-        preventDuplicates: true,
-      }
-    )],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-top-right',
+      progressBar: true,
+      progressAnimation: 'increasing',
+      preventDuplicates: true,
+    }),
+  ],
   providers: [RecipeService],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
