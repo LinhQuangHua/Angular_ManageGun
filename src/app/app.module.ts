@@ -17,6 +17,7 @@ import { CategoryComponent } from './category/category.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { CategoryEditComponent } from './category/category-edit/category-edit.component';
 import { CateItemComponent } from './category/category-list/cate-item/cate-item.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,16 @@ import { CateItemComponent } from './category/category-list/cate-item/cate-item.
     CategoryEditComponent,
     CateItemComponent,
   ],
-  imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule],
+  imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule,
+    ToastrModule.forRoot(
+      {
+        timeOut: 2000,
+        positionClass: 'toast-top-right',
+        progressBar: true,
+        progressAnimation: 'increasing',
+        preventDuplicates: true,
+      }
+    )],
   providers: [RecipeService],
   bootstrap: [AppComponent],
 })
