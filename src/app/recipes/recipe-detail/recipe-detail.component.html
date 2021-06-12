@@ -8,7 +8,7 @@
 <br />
 <div class="row">
   <div class="col-sm-12">
-    <h4>{{ recipe?.name }}</h4>
+    <h4>Name: {{ recipe?.name }}</h4>
   </div>
 </div>
 <br />
@@ -19,11 +19,14 @@
 </div>
 <br />
 <div class="row">
-  <div class="col-sm-12">{{ recipe?.price }}</div>
+  <div class="col-sm-12">Price: ${{ recipe?.price }}</div>
 </div>
 <br />
 <div class="row">
-  <div class="col-sm-7">{{ recipe?.description }}</div>
+  <div class="col-sm-7">
+    <p><u>Description:</u></p>
+    {{ recipe?.description }}
+  </div>
 </div>
 <br />
 <div class="row">

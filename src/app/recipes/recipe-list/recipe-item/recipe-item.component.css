@@ -3,7 +3,10 @@
   flex-wrap: nowrap;
    flex-direction: row 
 }
-
+img{
+  width: -webkit-fill-available;
+  height: 107px;
+}
 .card
 {
   background-color: #ffffff5e

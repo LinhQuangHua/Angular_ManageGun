@@ -6,10 +6,10 @@
         {{ recipe.id }}
       </h4>
       <p class="list-group-item-text">
-        {{ recipe.name }}
+        Name: {{ recipe.name }}
       </p>
       <p class="list-group-item-text">
-        {{ recipe.price }}
+        Price: ${{ recipe.price }}
       </p>
       <a [routerLink]="[index]" routerLinkActive="active" class="btn btn-primary">See more</a>
     </div>
