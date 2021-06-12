@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CateService } from '../category.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-category-edit',
@@ -17,7 +18,8 @@ export class CategoryEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private cateService: CateService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -27,6 +29,7 @@ export class CategoryEditComponent implements OnInit {
       this.initForm();
     });
   }
+
   private initForm() {
 
     if (this.editMode) {
@@ -46,14 +49,16 @@ export class CategoryEditComponent implements OnInit {
 
   onSubmit() {
 
-    if (!this.cateForm.get('id_cate').value && !this.cateForm.get('name_cate').value) { window.alert("The form can' t null!") }
-    else if (!this.cateForm.get('id_cate').value) { window.alert("Category' Id can' t null!") }
-    else if (!this.cateForm.get('name_cate').value) { window.alert("Category' name can' t null!") }
+    if (!this.cateForm.get('id_cate').value && !this.cateForm.get('name_cate').value) { this.toastr.error('The form can not null', 'Error message') }
+    else if (!this.cateForm.get('id_cate').value) { this.toastr.error('Id of category can not null', 'Error message') }
+    else if (!this.cateForm.get('name_cate').value) { this.toastr.error('Name of category can not null', 'Error message') }
     else if (this.editMode) {
       this.cateService.updateCate(this.id, this.cateForm.value);
+      this.toastr.success('Successfully edit item has id: ' + this.cateForm.get('id_cate').value + ' new category', 'Successful message')
       this.onCancel();
     } else {
       this.cateService.addCate(this.cateForm.value);
+      this.toastr.success('Successfully added new category', 'Successful message')
       this.onCancel();
     }
   }
