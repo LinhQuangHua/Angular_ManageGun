@@ -1,5 +1,7 @@
+import { Gun } from './../../models/gun';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { GunService } from 'src/app/services/gun-service.service';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 
@@ -9,28 +11,26 @@ import { RecipeService } from '../recipe.service';
   styleUrls: ['./recipe-detail.component.css'],
 })
 export class RecipeDetailComponent implements OnInit {
-  recipe: Recipe;
-  id: number;
+  gun: Gun;
+
   constructor(
-    private recipeService: RecipeService,
+    private gunService: GunService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.id = +params['id'];
-      this.recipe = this.recipeService.getRecipe(this.id);
+      this.gun = this.gunService.getGunById(params['id']);
     });
   }
 
-
   onEditRecipe() {
-    this.router.navigate(['edit'], { relativeTo: this.route });
+    // this.router.navigate(['edit'], { relativeTo: this.route });
   }
 
   onDeleteRecipe() {
-    this.recipeService.deleteRecipe(this.id);
-    this.router.navigate(['/gun']);
+    // this.recipeService.deleteRecipe(this.id);
+    // this.router.navigate(['/gun']);
   }
 }

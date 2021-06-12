@@ -1,17 +1,20 @@
 <div class="flex-container">
-  <div class="card" style="width: 15rem; margin-right: 15px;">
-    <img src="{{ recipe.image }}" alt="{{ recipe.name }}">
+  <div class="card" style="width: 15rem; margin-right: 15px">
+    <img src="{{ recipe.imagePath }}" alt="{{ recipe.name }}" />
     <div class="card-body">
       <h4 class="list-group-item-heading">
-        {{ recipe.id }}
+        {{ recipe.name }}
       </h4>
       <p class="list-group-item-text">
-        {{ recipe.name }}
+        {{ recipe.category }}
       </p>
-      <p class="list-group-item-text">
-        {{ recipe.price }}
-      </p>
-      <a [routerLink]="[index]" routerLinkActive="active" class="btn btn-primary">See more</a>
+      <p class="list-group-item-text">{{ recipe.price }} $</p>
+      <a
+        [routerLink]="recipe.id"
+        routerLinkActive="active"
+        class="btn btn-primary"
+        >See more</a
+      >
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-12">
-    <h1 style="text-align: center;">List Gun</h1>
+    <h1 style="text-align: center">List Gun</h1>
     <button class="btn btn-success" (click)="onNewRecipe()">Add New Gun</button>
   </div>
 </div>
@@ -8,7 +8,11 @@
 <div class="row">
   <div class="col-sm-12">
     <div class="flex-container">
-      <app-recipe-item *ngFor="let recipeItem of recipes; let i = index" [recipe]="recipeItem" [index]="i">
+      <app-recipe-item
+        *ngFor="let recipeItem of this.gunService.guns; let i = index"
+        [recipe]="recipeItem"
+        [index]="i"
+      >
       </app-recipe-item>
     </div>
   </div>
