@@ -1,9 +1,10 @@
 <tr>
-    <th scope="row">{{index}}</th>
-    <td style="width: 30%;">{{ cate.id_cate }}</td>
-    <td style="width: 30%;">{{ cate.name_cate }}</td>
-    <td><a (click)="onEditCate([index])" class="btn btn-primary">Edit</a>&nbsp;
-        <a (click)="onDeleteCate([index])" class="btn btn-danger">Delete</a>
-    </td>
+  <th scope="row">{{ index }}</th>
+  <td style="width: 30%">{{ cate.id }}</td>
+  <td style="width: 30%">{{ cate.name }}</td>
+  <td>
+    <a (click)="onEditCate([index])" class="btn btn-primary">Edit</a>&nbsp;
+    <a (click)="onDeleteCate([index])" class="btn btn-danger">Delete</a>
+  </td>
 </tr>
-<br>
+<br />

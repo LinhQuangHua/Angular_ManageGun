@@ -1,12 +1,13 @@
+import { GunService } from 'src/app/services/gun-service.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Category } from '../../category.model';
 import { CateService } from '../../category.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Category } from 'src/app/models/category';
 
 @Component({
   selector: 'app-cate-item',
   templateUrl: './cate-item.component.html',
-  styleUrls: ['./cate-item.component.css']
+  styleUrls: ['./cate-item.component.css'],
 })
 export class CateItemComponent implements OnInit {
   @Input() cate: Category;
@@ -14,16 +15,14 @@ export class CateItemComponent implements OnInit {
   cates: Category;
   id: number;
   constructor(
-    private cateService: CateService,
+    private gunService: GunService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
-
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      this.id = +params['id'];
-      this.cates = this.cateService.getCate(this.id);
+      this.cates = this.gunService.getCategoryById(params['id']);
     });
   }
 
@@ -32,8 +31,7 @@ export class CateItemComponent implements OnInit {
   }
 
   onDeleteCate(index) {
-    this.cateService.deleteCate(index);
-    this.router.navigate(['/category']);
+    // this.gunService.deleteCate(index);
+    // this.router.navigate(['/category']);
   }
-
 }

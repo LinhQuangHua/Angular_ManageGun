@@ -45,6 +45,10 @@ export class GunService {
     return this.guns.find((x) => x.id === gunId);
   }
 
+  getCategoryById(cateId: string): Category | undefined {
+    return this.categories.find((x) => x.id === cateId);
+  }
+
   async postGun(gunCreateModel: GunCreateEditModel): Promise<void> {
     const gunToBeAdd: Gun = {
       id: gunCreateModel.id ?? this.angularFireStore.createId(),
