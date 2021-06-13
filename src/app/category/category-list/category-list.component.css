@@ -11,3 +11,7 @@ tr th
 {
   color: white;
 }
+.table thead th{
+  display: inline-flex;
+  width: 100%;
+}

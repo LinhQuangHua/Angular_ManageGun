@@ -17,21 +17,16 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th scope="col">
-                    #
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Category ID
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Category name
+                  <th scope="col" class="th-table">
+                    <p>#</p>
+                    <p style="margin-left: 47px;">Category ID</p>
+                    <p style="margin-left: 158px;">Category name</p>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <app-cate-item
-                  *ngFor="let cateItem of gunService.categories; let i = index"
-                  [cate]="cateItem"
-                  [index]="i"
-                >
+                <app-cate-item *ngFor="let cateItem of gunService.categories; let i = index" [cate]="cateItem"
+                  [index]="i">
                 </app-cate-item>
               </tbody>
             </table>

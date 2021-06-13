@@ -5,11 +5,12 @@
         <form [formGroup]="cateForm" (ngSubmit)="onSubmit()">
             <div class="row">
             </div>
-            <div class="row">
+            <div class="row" [ngStyle]="{ 'display': editMode === false ? 'none' : 'auto' }">
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label for="id">Category ID</label>
-                        <input type="text" id="id_cate" class="form-control" formControlName="id_cate" required>
+                        <input type="text" id="id_cate" class="form-control" formControlName="id_cate"
+                            style="background-color: #00000045;" disabled>
                     </div>
                 </div>
             </div>
