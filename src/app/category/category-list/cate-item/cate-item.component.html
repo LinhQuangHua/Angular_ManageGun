@@ -3,8 +3,8 @@
   <td style="width: 30%">{{ cate.id }}</td>
   <td style="width: 30%">{{ cate.name }}</td>
   <td>
-    <a (click)="onEditCate([index])" class="btn btn-primary">Edit</a>&nbsp;
-    <a (click)="onDeleteCate([index])" class="btn btn-danger">Delete</a>
+    <a (click)="onEditCate(cate.id)" class="btn btn-primary">Edit</a>&nbsp;
+    <a (click)="onDeleteCate(cate.id)" class="btn btn-danger">Delete</a>
   </td>
 </tr>
 <br />
