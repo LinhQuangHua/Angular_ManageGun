@@ -5,11 +5,12 @@
     <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
       <div class="row">
       </div>
-      <div class="row">
+      <div class="row" [ngStyle]="{ 'display': editMode === false ? 'none' : 'auto' }">
         <div class="col-sm-12">
           <div class="form-group">
             <label for="id">Gun ID</label>
-            <input type="text" id="id" class="form-control" formControlName="id" required />
+            <input type="text" id="id" class="form-control" formControlName="id" style="background-color: #00000045;"
+              disabled />
           </div>
         </div>
       </div>
