@@ -11,6 +11,7 @@ import { of } from 'rxjs';
   providedIn: 'root',
 })
 export class GunService {
+  private pageSizes: number = 5;
   private nextDocCursor: any;
   private prevDocCursor: any;
   private prevPageStack: any[] = [];
@@ -22,7 +23,9 @@ export class GunService {
     private angularFireStorage: AngularFireStorage
   ) {
     this.angularFireStore
-      .collection<Gun>('guns', (ref) => ref.orderBy('name').limit(2))
+      .collection<Gun>('guns', (ref) =>
+        ref.orderBy('name').limit(this.pageSizes)
+      )
       .snapshotChanges()
       .subscribe((x) => {
         this.nextDocCursor = x[x.length - 1].payload.doc;
@@ -88,7 +91,7 @@ export class GunService {
 
     this.angularFireStore
       .collection<Gun>('guns', (ref) =>
-        ref.orderBy('name').limit(2).startAfter(this.nextDocCursor)
+        ref.orderBy('name').limit(5).startAfter(this.nextDocCursor)
       )
       .snapshotChanges()
       .subscribe((x) => {
@@ -114,14 +117,13 @@ export class GunService {
     this.prevDocCursor = this.prevPageStack[this.prevPageStack.length - 1];
     this.angularFireStore
       .collection<Gun>('guns', (ref) =>
-        ref.orderBy('name').limit(2).startAt(this.prevDocCursor)
+        ref.orderBy('name').limit(this.pageSizes).startAt(this.prevDocCursor)
       )
       .snapshotChanges()
       .subscribe((x) => {
         if (x) {
           this.nextDocCursor = x[x.length - 1].payload.doc;
           this.prevDocCursor = x[0].payload.doc;
-          // this.prevPageStack.push(this.prevDocCursor);
 
           this.guns = x.map((g) => {
             return {

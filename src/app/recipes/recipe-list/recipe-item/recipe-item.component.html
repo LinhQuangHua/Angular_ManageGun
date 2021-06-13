@@ -1,10 +1,14 @@
-<div class="flex-container">
-  <div class="card" style="width: 15rem; margin-right: 15px">
-    <img src="{{ recipe.imagePath }}" alt="{{ recipe.name }}" />
+<div class="h-100 d-flex">
+  <div class="card align-self-stretch">
+    <img
+      src="{{ recipe.imagePath }}"
+      class="img-fluid"
+      alt="{{ recipe.name }}"
+    />
     <div class="card-body">
-      <h4 class="list-group-item-heading">
+      <h5 class="list-group-item-heading">
         {{ recipe.name }}
-      </h4>
+      </h5>
       <p class="list-group-item-text">
         {{ recipe.category }}
       </p>

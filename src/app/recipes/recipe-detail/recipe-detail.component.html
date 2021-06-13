@@ -17,11 +17,14 @@
   </div>
   <br />
   <div class="row">
-    <div class="col-sm-12">{{ gun?.price + "$" }}</div>
+    <div class="col-sm-12">Price: ${{ gun?.price }}</div>
   </div>
   <br />
   <div class="row">
-    <div class="col-sm-7">{{ gun?.description }}</div>
+    <div class="col-sm-7">
+      <p><u>Description:</u></p>
+      {{ gun?.description }}
+    </div>
     <div class="col-sm-5">
       <div
         class="btn-group"

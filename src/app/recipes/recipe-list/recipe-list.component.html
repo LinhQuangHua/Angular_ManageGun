@@ -7,8 +7,9 @@
 <hr />
 <div class="row">
   <div class="col-sm-12">
-    <div class="flex-container">
+    <div class="row">
       <app-recipe-item
+        class="col-sm-4"
         *ngFor="let recipeItem of this.gunService.guns; let i = index"
         [recipe]="recipeItem"
         [index]="i"
