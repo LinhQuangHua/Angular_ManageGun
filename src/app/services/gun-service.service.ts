@@ -1,3 +1,4 @@
+import { UPDATE_SUCCESS, CREATE_SUCCESS } from './../constant/repsond-status';
 import { Gun, GunCreateEditModel } from './../models/gun';
 import { Category } from './../models/category';
 import { Injectable } from '@angular/core';
@@ -6,12 +7,13 @@ import { Observable } from 'rxjs/internal/Observable';
 import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { of } from 'rxjs';
+import { CREATE_UPDATE_FAILED } from '../constant/repsond-status';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GunService {
-  private pageSizes: number = 5;
+  private pageSizes: number = 1;
   private nextDocCursor: any;
   private prevDocCursor: any;
   private prevPageStack: any[] = [];
@@ -52,7 +54,10 @@ export class GunService {
     return this.categories.find((x) => x.id === cateId);
   }
 
-  async postGun(gunCreateModel: GunCreateEditModel): Promise<void> {
+  async postGun(gunCreateModel: GunCreateEditModel): Promise<number> {
+    let statusCode: number = gunCreateModel.id
+      ? UPDATE_SUCCESS
+      : CREATE_SUCCESS;
     const gunToBeAdd: Gun = {
       id: gunCreateModel.id ?? this.angularFireStore.createId(),
       name: gunCreateModel.name,
@@ -76,12 +81,16 @@ export class GunService {
           })
         )
         .toPromise();
+      statusCode = UPDATE_SUCCESS;
     }
     const imgUrl = await this.downloadURL.toPromise();
     if (imgUrl) {
       gunToBeAdd.imagePath = imgUrl;
     }
-    this.saveChange(gunToBeAdd);
+    await this.saveChange(gunToBeAdd).catch(
+      (_) => (statusCode = CREATE_UPDATE_FAILED)
+    );
+    return statusCode;
   }
 
   getGunsPagination(): void {}
@@ -91,7 +100,7 @@ export class GunService {
 
     this.angularFireStore
       .collection<Gun>('guns', (ref) =>
-        ref.orderBy('name').limit(5).startAfter(this.nextDocCursor)
+        ref.orderBy('name').limit(this.pageSizes).startAfter(this.nextDocCursor)
       )
       .snapshotChanges()
       .subscribe((x) => {
@@ -133,8 +142,8 @@ export class GunService {
         }
       });
   }
-  saveChange(gunToBeAdd: Gun) {
-    this.angularFireStore
+  saveChange(gunToBeAdd: Gun): Promise<void> {
+    return this.angularFireStore
       .collection<Gun>('guns')
       .doc(gunToBeAdd.id)
       .set(gunToBeAdd, { merge: true });

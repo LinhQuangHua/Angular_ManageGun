@@ -1,9 +1,15 @@
+import * as repsondStatus from './../../constant/repsond-status';
 import { GunService } from 'src/app/services/gun-service.service';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { RecipeService } from '../recipe.service';
 import { ToastrService } from 'ngx-toastr';
+import { Gun } from 'src/app/models/gun';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -11,96 +17,125 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./recipe-edit.component.css'],
 })
 export class RecipeEditComponent implements OnInit {
-  id: string;
-  editMode = false;
-  checkStatus = 5;
-  recipeForm: FormGroup;
+  isDisplay: boolean = false;
+  isEditMode: boolean = false;
+  imageUrl: string = '';
+
+  gunForm: FormGroup = this.fb.group({
+    id: [null],
+    name: ['', Validators.required],
+    price: ['', Validators.required],
+    description: ['', Validators.required],
+    category: ['', Validators.required],
+    image: [''],
+  });
   constructor(
     private route: ActivatedRoute,
-    private gunService: GunService,
+    public gunService: GunService,
+    private fb: FormBuilder,
     private router: Router,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.id = params['id'];
-      this.editMode = params['id'] != null;
-      this.initForm();
+      let existGun = this.gunService.getGunById(params['id']);
+      if (existGun) {
+        this.mapToForm(existGun);
+        this.isEditMode = true;
+      }
     });
   }
-  private initForm() {
-    let recipeName = '';
-    let recipeID = '';
-    let recipePrice = 0;
-    let recipeDescription = '';
-    let recipeImage = '';
 
-    if (this.editMode) {
-      const recipe = this.gunService.getGunById(this.id);
-      recipeName = recipe?.name;
-      recipeID = recipe?.id;
-      recipeImage = recipe?.imagePath;
-      recipePrice = recipe?.price;
-      recipeDescription = recipe?.description;
+  mapToForm(existGun: Gun): void {
+    const { id, name, price, description, category, imagePath } = existGun;
+    this.imageUrl = imagePath!;
+    this.gunForm.patchValue({
+      id,
+      name,
+      price,
+      description,
+      category,
+      image: this.imageUrl,
+    });
+  }
+
+  onSubmit(form: FormGroup): void {
+    //Đống code dưới sẽ trả về các field trong Form không thỏa các Validator
+    //Lặp từng formControl và console.log ra error
+    //Đừng xóa nha Wang :)
+    if (!form.valid) {
+      Object.keys(form.controls).forEach((key) => {
+        const controlErrors: ValidationErrors = form.get(key).errors;
+        if (controlErrors != null) {
+          Object.keys(controlErrors).forEach((keyError) => {
+            console.log(
+              'Key control: ' +
+                key +
+                ', keyError: ' +
+                keyError +
+                ', err value: ',
+              controlErrors[keyError]
+            );
+          });
+        }
+      });
     }
-    this.recipeForm = new FormGroup({
-      name: new FormControl(recipeName, Validators.required),
-      id: new FormControl(recipeID, Validators.required),
-      image: new FormControl(recipeImage, Validators.required),
-      price: new FormControl(recipePrice, Validators.required),
-      description: new FormControl(recipeDescription, Validators.required),
-    });
-  }
+    //
 
-  onSubmit() {
-    // if (!this.recipeForm.get('id').value
-    //   && !this.recipeForm.get('name').value
-    //   && !this.recipeForm.get('image').value
-    //   && !this.recipeForm.get('price').value
-    //   && !this.recipeForm.get('description').value) {
-    //   this.checkStatus -= 5;
-    //   this.toastr.error('The form can not null', 'Error message')
-    // }
-    // else {
-    //   if (!this.recipeForm.get('id').value) {
-    //     this.checkStatus -= 1;
-    //     this.toastr.error('Id of gun can not null', 'Error message')
-    //   }
-    //   if (!this.recipeForm.get('name').value) {
-    //     this.checkStatus -= 1;
-    //     this.toastr.error('Name of gun can not null', 'Error message')
-    //   }
-    //   if (!this.recipeForm.get('image').value) {
-    //     this.checkStatus -= 1;
-    //     this.toastr.error('Image of gun can not null', 'Error message')
-    //   }
-    //   if (!this.recipeForm.get('price').value) {
-    //     this.checkStatus -= 1;
-    //     this.toastr.error('Price of gun can not null', 'Error message')
-    //   }
-    //   if (!this.recipeForm.get('description').value) {
-    //     this.checkStatus -= 1;
-    //     this.toastr.error('Description of gun can not null', 'Error message')
-    //   }
-    // }
-    // if (this.checkStatus != 5) {
-    //   this.toastr.warning('Please do not leave any fields in the form blank', 'Warning message');
-    // }
-    // else {
-    //   if (this.editMode) {
-    //     this.recipeService.updateRecipe(this.id, this.recipeForm.value);
-    //     this.onCancel();
-    //   }
-    //   else {
-    //     this.recipeService.addRecipe(this.recipeForm.value);
-    //     this.onCancel();
-    //   }
-    // }
-    // this.checkStatus = 5;
+    if (!this.imageUrl) {
+      this.toastr.error('Chưa chọn hình cho súng', 'Thất bại !');
+      return;
+    }
+
+    this.gunService.postGun(form.value).then((res) => {
+      switch (res) {
+        case repsondStatus.CREATE_SUCCESS:
+          form.reset();
+          this.toastr.success('Đã thêm súng vào kho "hàng"', 'Thành công !');
+          break;
+        case repsondStatus.UPDATE_SUCCESS:
+          form.reset();
+          this.toastr.success(
+            'Đã chỉnh sửa súng trong kho "hàng"',
+            'Thành công !'
+          );
+          break;
+        default:
+          this.toastr.error(
+            'Thêm súng vào kho "hàng" đã không xảy ra suôn sẻ',
+            'Thất bại !'
+          );
+          break;
+      }
+    });
   }
 
   onCancel() {
     this.router.navigate(['/gun'], { relativeTo: this.route });
+  }
+
+  onCategoryChange(event: Event) {
+    const element = event.currentTarget as HTMLSelectElement;
+    if (element) {
+      this.gunForm.patchValue({
+        category: element.value,
+      });
+    }
+  }
+
+  onFileChange(event: Event): void {
+    const element = event.currentTarget as HTMLInputElement;
+    let fileList: FileList | null = element.files;
+    if (fileList !== null && fileList?.length != 0) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imageUrl = reader.result as string;
+      };
+      reader.readAsDataURL(fileList[0]);
+      this.gunForm.patchValue({
+        image: fileList[0],
+      });
+    }
   }
 }
