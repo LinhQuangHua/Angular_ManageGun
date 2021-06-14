@@ -39,6 +39,7 @@ export class RecipeEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
+      if (!params['id']) return;
       let existGun = this.gunService.getGunById(params['id']);
       if (existGun) {
         this.mapToForm(existGun);
@@ -108,6 +109,7 @@ export class RecipeEditComponent implements OnInit {
           );
           break;
       }
+      this.imageUrl = '';
     });
   }
 

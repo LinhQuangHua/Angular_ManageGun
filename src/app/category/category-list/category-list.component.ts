@@ -1,8 +1,6 @@
 import { GunService } from './../../services/gun-service.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Category } from '../category.model';
-import { CateService } from '../category.service';
 
 @Component({
   selector: 'app-category-list',
