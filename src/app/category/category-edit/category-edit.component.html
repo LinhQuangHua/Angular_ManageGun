@@ -1,33 +1,44 @@
-<h2 style="margin-top: 57px;">Category of Information</h2>
-<hr>
+<h2 style="margin-top: 57px">Category of Information</h2>
+<hr />
 <div class="row">
-    <div class="col-sm-12">
-        <form [formGroup]="cateForm" (ngSubmit)="onSubmit()">
-            <div class="row">
-            </div>
-            <div class="row" [ngStyle]="{ 'display': editMode === false ? 'none' : 'auto' }">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <label for="id">Category ID</label>
-                        <input type="text" id="id_cate" class="form-control" formControlName="id_cate"
-                            style="background-color: #00000045;" disabled>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <label for="name">Category Name</label>
-                        <input type="text" id="name_cate" class="form-control" formControlName="name_cate" required>
-                    </div>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-success">
-                Save
-            </button>&nbsp;
-            <button type="button" class="btn btn-danger" (click)="onCancel()">
-                Cancel
-            </button>
-        </form>
-    </div>
+  <div class="col-sm-12">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit(categoryForm)">
+      <div class="row"></div>
+      <div
+        class="row"
+        [ngStyle]="{ display: editMode === false ? 'none' : 'auto' }"
+      >
+        <div class="col-sm-12">
+          <div class="form-group">
+            <input
+              type="text"
+              id="id"
+              class="form-control"
+              formControlName="id"
+              style="background-color: #00000045"
+              disabled
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="name">Category Name</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              formControlName="name"
+              required
+            />
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success">Save</button>&nbsp;
+      <button type="button" class="btn btn-danger" (click)="onCancel()">
+        Cancel
+      </button>
+    </form>
+  </div>
 </div>

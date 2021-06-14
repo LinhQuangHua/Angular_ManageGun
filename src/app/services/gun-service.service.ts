@@ -1,19 +1,23 @@
-import { UPDATE_SUCCESS, CREATE_SUCCESS } from './../constant/repsond-status';
+import {
+  UPDATE_SUCCESS,
+  CREATE_SUCCESS,
+  DELETE_SUCCESS,
+  CREATE_UPDATE_DELETE_FAILED,
+} from './../constant/repsond-status';
 import { Gun, GunCreateEditModel } from './../models/gun';
-import { Category } from './../models/category';
+import { Category, CategoryCreateModel } from './../models/category';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs/internal/Observable';
 import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { of } from 'rxjs';
-import { CREATE_UPDATE_FAILED } from '../constant/repsond-status';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GunService {
-  private pageSizes: number = 1;
+  private pageSizes: number = 3;
   private nextDocCursor: any;
   private prevDocCursor: any;
   private prevPageStack: any[] = [];
@@ -30,15 +34,17 @@ export class GunService {
       )
       .snapshotChanges()
       .subscribe((x) => {
-        this.nextDocCursor = x[x.length - 1].payload.doc;
-        this.prevDocCursor = x[0].payload.doc;
-        this.prevPageStack.push(this.prevDocCursor);
+        if (x.length) {
+          this.nextDocCursor = x[x.length - 1].payload.doc;
+          this.prevDocCursor = x[0].payload.doc;
+          this.prevPageStack.push(this.prevDocCursor);
 
-        this.guns = x.map((g) => {
-          return {
-            ...g.payload.doc.data(),
-          } as Gun;
-        });
+          this.guns = x.map((g) => {
+            return {
+              ...g.payload.doc.data(),
+            } as Gun;
+          });
+        }
       });
     angularFireStore
       .collection<Category>('categories')
@@ -87,13 +93,34 @@ export class GunService {
     if (imgUrl) {
       gunToBeAdd.imagePath = imgUrl;
     }
-    await this.saveChange(gunToBeAdd).catch(
-      (_) => (statusCode = CREATE_UPDATE_FAILED)
+    await this.addOrUpdateGun(gunToBeAdd).catch(
+      (_) => (statusCode = CREATE_UPDATE_DELETE_FAILED)
     );
     return statusCode;
   }
 
-  getGunsPagination(): void {}
+  async deleteGun(gunId: string): Promise<number> {
+    let statusCode: number = DELETE_SUCCESS;
+    let existingGun: Gun = this.getGunById(gunId);
+    if (!existingGun) {
+      return CREATE_UPDATE_DELETE_FAILED;
+    }
+
+    let fileRef = this.angularFireStorage.refFromURL(existingGun.imagePath);
+
+    await fileRef
+      .delete()
+      .toPromise()
+      .catch((err) => CREATE_UPDATE_DELETE_FAILED);
+
+    await this.angularFireStore
+      .collection<Gun>('guns')
+      .doc(existingGun.id)
+      .delete()
+      .catch((err) => CREATE_UPDATE_DELETE_FAILED);
+
+    return statusCode;
+  }
 
   next(): void {
     if (!this.nextDocCursor) return;
@@ -142,10 +169,78 @@ export class GunService {
         }
       });
   }
-  saveChange(gunToBeAdd: Gun): Promise<void> {
+
+  async postCategory(
+    categoryCreateUpdateModel: CategoryCreateModel
+  ): Promise<number> {
+    let existingCategory = this.getCategoryById(categoryCreateUpdateModel.id);
+    let statusCode: number = existingCategory ? UPDATE_SUCCESS : CREATE_SUCCESS;
+    const categoryToBeAdd: CategoryCreateModel = {
+      id: existingCategory.id ?? this.angularFireStore.createId(),
+      name: categoryCreateUpdateModel.name,
+    };
+    let addOrUpdateOperation: Promise<void> =
+      this.addOrUpdateCategory(categoryToBeAdd);
+
+    if (statusCode == UPDATE_SUCCESS) {
+      addOrUpdateOperation.then((_) =>
+        this.angularFireStore
+          .collection<Gun>('guns', (ref) =>
+            ref.where('category', '==', existingCategory.name)
+          )
+          .get()
+          .subscribe((x) => {
+            x.forEach((doc) => {
+              doc.ref.update({ category: categoryCreateUpdateModel.name });
+            });
+          })
+      );
+      addOrUpdateOperation.catch(
+        (_) => (statusCode = CREATE_UPDATE_DELETE_FAILED)
+      );
+    }
+    return statusCode;
+  }
+
+  async deleteCategory(cateId: string): Promise<number> {
+    let statusCode: number = DELETE_SUCCESS;
+    let existingCategory: Category = this.getCategoryById(cateId);
+    if (!existingCategory) {
+      return CREATE_UPDATE_DELETE_FAILED;
+    }
+
+    await this.angularFireStore
+      .collection<Category>('categories')
+      .doc(existingCategory.id)
+      .delete()
+      .then((_) =>
+        this.angularFireStore
+          .collection<Gun>('guns', (ref) =>
+            ref.where('category', '==', existingCategory.name)
+          )
+          .get()
+          .subscribe((x) => {
+            x.forEach((doc) => {
+              doc.ref.update({ category: '' });
+            });
+          })
+      )
+      .catch((err) => CREATE_UPDATE_DELETE_FAILED);
+
+    return statusCode;
+  }
+
+  addOrUpdateGun(gunToBeAdd: Gun): Promise<void> {
     return this.angularFireStore
       .collection<Gun>('guns')
       .doc(gunToBeAdd.id)
       .set(gunToBeAdd, { merge: true });
+  }
+
+  addOrUpdateCategory(categoryToBeAdd: Category): Promise<void> {
+    return this.angularFireStore
+      .collection<Category>('categories')
+      .doc(categoryToBeAdd.id)
+      .set(categoryToBeAdd, { merge: true });
   }
 }

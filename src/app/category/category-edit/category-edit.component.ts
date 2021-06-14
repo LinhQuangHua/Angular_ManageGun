@@ -1,9 +1,13 @@
 import { GunService } from 'src/app/services/gun-service.service';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CateService } from '../category.service';
 import { ToastrService } from 'ngx-toastr';
+import {
+  CREATE_SUCCESS,
+  UPDATE_SUCCESS,
+} from 'src/app/constant/repsond-status';
+import { Category } from 'src/app/models/category';
 
 @Component({
   selector: 'app-category-edit',
@@ -11,54 +15,71 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./category-edit.component.css'],
 })
 export class CategoryEditComponent implements OnInit {
-  id: string;
-  cateName: string;
-  cateID: string;
   editMode = false;
-  cateForm: FormGroup;
+
+  categoryForm: FormGroup = this.fb.group({
+    id: [null],
+    name: ['', Validators.required],
+  });
+
   constructor(
     private route: ActivatedRoute,
     private gunService: GunService,
+    private fb: FormBuilder,
     private router: Router,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.id = params['id'];
-      this.editMode = params['id'] != null;
-      this.initForm();
+      if (!params['id']) return;
+      let existingCategory = this.gunService.getCategoryById(params['id']);
+      if (existingCategory) {
+        this.mapToForm(existingCategory);
+      }
     });
   }
 
-  private initForm() {
-    if (this.editMode) {
-      const cate = this.gunService.getCategoryById(this.id);
-      this.cateName = cate?.name;
-      this.cateID = cate?.id;
+  mapToForm(existingCategory: Category): void {
+    const { id, name } = existingCategory;
+    this.categoryForm.patchValue({
+      id,
+      name,
+    });
+  }
+
+  onSubmit(form: FormGroup) {
+    if (!form.valid) {
+      this.toastr.error('Chưa điền tên cho danh mục này', 'Thất bại !');
+      return;
     }
-    this.cateForm = new FormGroup({
-      name_cate: new FormControl(this.cateName, Validators.required),
-      id_cate: new FormControl(this.cateID, Validators.required),
+    this.gunService.postCategory(form.value).then((res) => {
+      switch (res) {
+        case CREATE_SUCCESS:
+          form.reset();
+          this.toastr.success(
+            'Đã thêm danh mục vào kho "hàng"',
+            'Thành công !'
+          );
+          break;
+        case UPDATE_SUCCESS:
+          form.reset();
+          this.toastr.success(
+            'Đã chỉnh sửa danh mục trong kho "hàng"',
+            'Thành công !'
+          );
+          break;
+        default:
+          this.toastr.error(
+            'Thêm danh mục vào kho "hàng" đã không xảy ra suôn sẻ',
+            'Thất bại !'
+          );
+          break;
+      }
     });
-  }
-
-  onSubmit() {
-    // if (!this.cateForm.get('id_cate').value && !this.cateForm.get('name_cate').value) { this.toastr.error('The form can not null', 'Error message') }
-    // else if (!this.cateForm.get('id_cate').value) { this.toastr.error('Id of category can not null', 'Error message') }
-    // else if (!this.cateForm.get('name_cate').value) { this.toastr.error('Name of category can not null', 'Error message') }
-    // else if (this.editMode) {
-    //   this.cateService.updateCate(this.id, this.cateForm.value);
-    //   this.toastr.success('Successfully edit item has id: ' + this.cateForm.get('id_cate').value + ' new category', 'Successful message')
-    //   this.onCancel();
-    // } else {
-    //   this.cateService.addCate(this.cateForm.value);
-    //   this.toastr.success('Successfully added new category', 'Successful message')
-    //   this.onCancel();
-    // }
   }
 
   onCancel() {
-    // this.router.navigate(['/category'], { relativeTo: this.route });
+    this.router.navigate(['/category'], { relativeTo: this.route });
   }
 }

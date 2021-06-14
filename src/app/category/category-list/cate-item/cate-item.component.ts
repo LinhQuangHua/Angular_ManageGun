@@ -1,6 +1,5 @@
 import { GunService } from 'src/app/services/gun-service.service';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CateService } from '../../category.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Category } from 'src/app/models/category';
 
@@ -30,8 +29,8 @@ export class CateItemComponent implements OnInit {
     this.router.navigate([index + '/edit'], { relativeTo: this.route });
   }
 
-  onDeleteCate(index) {
-    // this.gunService.deleteCate(index);
-    // this.router.navigate(['/category']);
+  onDeleteCate(categoryId: string) {
+    this.gunService.deleteCategory(categoryId);
+    this.router.navigate(['/category']);
   }
 }
