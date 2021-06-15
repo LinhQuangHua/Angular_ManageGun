@@ -87,7 +87,6 @@ export class GunService {
           })
         )
         .toPromise();
-      statusCode = UPDATE_SUCCESS;
     }
     const imgUrl = await this.downloadURL.toPromise();
     if (imgUrl) {
