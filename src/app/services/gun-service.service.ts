@@ -17,7 +17,7 @@ import { of } from 'rxjs';
   providedIn: 'root',
 })
 export class GunService {
-  private pageSizes: number = 3;
+  private pageSizes: number = 2;
   private nextDocCursor: any;
   private prevDocCursor: any;
   private prevPageStack: any[] = [];

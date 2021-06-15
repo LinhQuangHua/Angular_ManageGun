@@ -1,24 +1,28 @@
 <div class="h-100 d-flex">
-  <div class="card align-self-stretch">
-    <img
-      src="{{ recipe.imagePath }}"
-      class="img-fluid"
-      alt="{{ recipe.name }}"
-    />
-    <div class="card-body">
-      <h5 class="list-group-item-heading">
+  <div class="card align-self-stretch text-center">
+    <div class="card-body d-flex flex-column">
+      <h5 class="list-group-item-heading flex-fill">
         {{ recipe.name }}
       </h5>
-      <p class="list-group-item-text">
+      <img
+        src="{{ recipe.imagePath }}"
+        class="card-img-top img-fluid"
+        alt="{{ recipe.name }}"
+      />
+      <p class="list-group-item-text font-weight-bold">
         {{ recipe.category }}
       </p>
-      <p class="list-group-item-text">{{ recipe.price }} $</p>
-      <a
-        [routerLink]="recipe.id"
-        routerLinkActive="active"
-        class="btn btn-primary"
-        >See more</a
-      >
+      <h6 class="list-group-item-text font-weight-light">
+        {{ recipe.price }} $
+      </h6>
+      <div class="d-flex">
+        <a
+          [routerLink]="recipe.id"
+          routerLinkActive="active"
+          class="btn btn-primary w-100"
+          >See more</a
+        >
+      </div>
     </div>
   </div>
 </div>
