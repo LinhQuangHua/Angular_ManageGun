@@ -6,10 +6,12 @@ import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.compon
 import { RecipesComponent } from './recipes/recipes.component';
 import { CategoryComponent } from './category/category.component';
 import { CategoryEditComponent } from './category/category-edit/category-edit.component';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: '', component: RecipeStartComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'dashboard', component: RecipeStartComponent, pathMatch: 'full' },
   {
     path: 'gun',
     component: RecipesComponent,

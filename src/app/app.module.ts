@@ -24,6 +24,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { CardHoverDirective } from './shared/card.hover.directive';
+import { LoginComponent } from './login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,6 +42,7 @@ import { CardHoverDirective } from './shared/card.hover.directive';
     CategoryEditComponent,
     CateItemComponent,
     CardHoverDirective,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

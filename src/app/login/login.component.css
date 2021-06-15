@@ -1,0 +1,19 @@
+*{
+    color: #fff;
+}
+.card.card-authentication1, i
+{
+    background-color: transparent;
+}
+input, button{
+    background-color: transparent;
+}
+input:focus{
+     background-color: transparent;
+}
+.card.card-authentication1
+{
+    display: block;
+    margin: auto;
+    top: 120px;
+}
