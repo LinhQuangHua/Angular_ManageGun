@@ -23,6 +23,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
+import { LoginComponent } from './login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +40,7 @@ import { AngularFireModule } from '@angular/fire';
     CategoryListComponent,
     CategoryEditComponent,
     CateItemComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
