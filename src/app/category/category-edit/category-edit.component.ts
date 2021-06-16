@@ -28,7 +28,7 @@ export class CategoryEditComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -50,7 +50,7 @@ export class CategoryEditComponent implements OnInit {
 
   onSubmit(form: FormGroup) {
     if (!form.valid) {
-      this.toastr.error('Chưa điền tên cho danh mục này', 'Thất bại !');
+      this.toastr.error('Chưa điền đủ thông tin cho danh mục này', 'Thất bại !');
       return;
     }
     this.gunService.postCategory(form.value).then((res) => {
