@@ -1,7 +1,7 @@
-<router-outlet *ngIf="href === '/login' ?  true : false">
+<router-outlet *ngIf="href === '/login' || href === '/' ?  true : false">
 </router-outlet>
 
-<div *ngIf="href === '/login' ?  false : true">
+<div *ngIf="href === '/login' || href === '/' ?  false : true">
       <app-header></app-header>
       <div class="container-fuild">
             <app-navbar></app-navbar>
