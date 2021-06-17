@@ -175,7 +175,7 @@ export class GunService {
     let existingCategory = this.getCategoryById(categoryCreateUpdateModel.id);
     let statusCode: number = existingCategory ? UPDATE_SUCCESS : CREATE_SUCCESS;
     const categoryToBeAdd: CategoryCreateModel = {
-      id: existingCategory.id ?? this.angularFireStore.createId(),
+      id: existingCategory?.id ?? this.angularFireStore.createId(),
       name: categoryCreateUpdateModel.name,
     };
     let addOrUpdateOperation: Promise<void> =
