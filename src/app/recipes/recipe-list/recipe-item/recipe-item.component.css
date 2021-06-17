@@ -9,7 +9,8 @@ img{
 }
 .card
 {
-  background-color: #ffffff5e
+  background-color: transparent;
+  width: 900%;
 }
 
 .list-group-item-text

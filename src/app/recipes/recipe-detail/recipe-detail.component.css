@@ -1,3 +1,12 @@
 p{
     color: white;
 }
+.row
+{
+    margin-top: 20px;
+}
+.image
+{
+    width: 60%!important;
+    padding: 5%;
+}

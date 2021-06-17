@@ -4,74 +4,46 @@
   <div class="col-sm-12">
     <form [formGroup]="gunForm" (ngSubmit)="onSubmit(gunForm)">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
           <div class="form-group">
-            <input
-              type="text"
-              id="id"
-              class="form-control"
-              formControlName="id"
-              [hidden]="true"
-              disabled
-            />
+            <input type="text" id="id" class="form-control" formControlName="id" [hidden]="true" disabled />
             <label for="name">Gun Name</label>
-            <input
-              type="text"
-              id="name"
-              class="form-control"
-              formControlName="name"
-            />
+            <input type="text" id="name" class="form-control" formControlName="name" />
           </div>
         </div>
-        <div class="col-sm-6">
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
           <div class="form-group">
             <label for="price" id="price">Price</label>
-            <input
-              type="number"
-              id="price"
-              class="form-control"
-              formControlName="price"
-            />
+            <input type="number" id="price" class="form-control" formControlName="price" />
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <label for="price" id="price">Image</label>
+          <br>
+          <img [src]="imageUrl" class="img-fluid" />
         </div>
       </div>
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group">
-            <button
-              type="button"
-              class="btn btn-primary w-100"
-              (click)="imgPicker.click()"
-            >
+            <button type="button" class="btn btn-primary w-100" (click)="imgPicker.click()">
               UPLOAD IMAGE
             </button>
-            <input
-              type="file"
-              (change)="onFileChange($event)"
-              [hidden]="true"
-              accept="image/*"
-              #imgPicker
-            />
+            <input type="file" (change)="onFileChange($event)" [hidden]="true" accept="image/*" #imgPicker />
           </div>
-        </div>
-        <div class="col-sm-6">
-          <img [src]="imageUrl" class="img-fluid" />
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12">
           <div class="form-group">
             <label for="category">Category :</label>
-            <select
-              class="form-control"
-              id="category"
-              formControlName="category"
-            >
-              <option
-                *ngFor="let category of this.gunService.categories"
-                [value]="category.name"
-                (change)="onCategoryChange($event)"
-              >
+            <select class="form-control" id="category" formControlName="category">
+              <option *ngFor="let category of this.gunService.categories" [value]="category.name"
+                (change)="onCategoryChange($event)">
                 {{ category.name }}
               </option>
             </select>
@@ -82,13 +54,7 @@
         <div class="col-sm-12">
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea
-              type="text"
-              id="description"
-              class="form-control"
-              formControlName="description"
-              rows="7"
-            >
+            <textarea type="text" id="description" class="form-control" formControlName="description" rows="7">
             </textarea>
           </div>
         </div>

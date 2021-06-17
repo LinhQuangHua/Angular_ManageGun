@@ -35,7 +35,7 @@ export class RecipeEditComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
@@ -72,10 +72,10 @@ export class RecipeEditComponent implements OnInit {
           Object.keys(controlErrors).forEach((keyError) => {
             console.log(
               'Key control: ' +
-                key +
-                ', keyError: ' +
-                keyError +
-                ', err value: ',
+              key +
+              ', keyError: ' +
+              keyError +
+              ', err value: ',
               controlErrors[keyError]
             );
           });
@@ -83,8 +83,11 @@ export class RecipeEditComponent implements OnInit {
       });
     }
     //
-
-    if (!this.imageUrl) {
+    if (this.gunForm.value['name'] === '' || this.gunForm.value['price'] === '' || this.gunForm.value['description'] === '' || this.gunForm.value['category'] === '') {
+      this.toastr.error('Vui lòng điền đầy đủ thông tin vào form', 'Thất bại !');
+      return;
+    }
+    else if (!this.imageUrl) {
       this.toastr.error('Chưa chọn hình cho súng', 'Thất bại !');
       return;
     }
