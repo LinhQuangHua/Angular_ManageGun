@@ -11,49 +11,41 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs/internal/Observable';
 import { finalize } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { of } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GunService {
-  private pageSizes: number = 4;
-  private nextDocCursor: any;
-  private prevDocCursor: any;
-  private prevPageStack: any[] = [];
-  downloadURL: Observable<string> = of('');
-  guns: Gun[] = [];
+  guns = new BehaviorSubject<Gun[]>([]);
   categories: Category[] = [];
   constructor(
     private angularFireStore: AngularFirestore,
     private angularFireStorage: AngularFireStorage
   ) {
-    this.angularFireStore
-      .collection<Gun>('guns', (ref) =>
-        ref.orderBy('name').limit(this.pageSizes)
-      )
-      .snapshotChanges()
-      .subscribe((x) => {
-        if (x.length) {
-          this.nextDocCursor = x[x.length - 1].payload.doc;
-          this.prevDocCursor = x[0].payload.doc;
-          this.prevPageStack.push(this.prevDocCursor);
+    this.fetchGuns().subscribe((x) => this.guns.next(x));
+    this.fetchCategories().subscribe((x) => (this.categories = x));
+  }
 
-          this.guns = x.map((g) => {
-            return {
-              ...g.payload.doc.data(),
-            } as Gun;
-          });
-        }
-      });
-    angularFireStore
+  fetchGuns(): Observable<Gun[]> {
+    return this.angularFireStore.collection<Gun>('guns').valueChanges();
+  }
+
+  pagination(pageIndex: number = 1, pageSizes: number = 10): Gun[] {
+    return this.guns.value.slice(
+      (pageIndex - 1) * pageSizes,
+      pageSizes * pageIndex
+    );
+  }
+
+  fetchCategories(): Observable<Category[]> {
+    return this.angularFireStore
       .collection<Category>('categories')
-      .valueChanges()
-      .subscribe((x) => (this.categories = x));
+      .valueChanges();
   }
 
   getGunById(gunId: string): Gun | undefined {
-    return this.guns.find((x) => x.id === gunId);
+    return this.guns.value.find((x) => x.id === gunId);
   }
 
   getCategoryById(cateId: string): Category | undefined {
@@ -83,18 +75,16 @@ export class GunService {
         .snapshotChanges()
         .pipe(
           finalize(() => {
-            this.downloadURL = fileRef.getDownloadURL();
+            fileRef.getDownloadURL().subscribe((x) => {
+              gunToBeAdd.imagePath = x;
+              this.addOrUpdateGun(gunToBeAdd).catch(
+                (_) => (statusCode = CREATE_UPDATE_DELETE_FAILED)
+              );
+            });
           })
         )
         .toPromise();
     }
-    const imgUrl = await this.downloadURL.toPromise();
-    if (imgUrl) {
-      gunToBeAdd.imagePath = imgUrl;
-    }
-    await this.addOrUpdateGun(gunToBeAdd).catch(
-      (_) => (statusCode = CREATE_UPDATE_DELETE_FAILED)
-    );
     return statusCode;
   }
 
@@ -119,54 +109,6 @@ export class GunService {
       .catch((err) => CREATE_UPDATE_DELETE_FAILED);
 
     return statusCode;
-  }
-
-  next(): void {
-    if (!this.nextDocCursor) return;
-
-    this.angularFireStore
-      .collection<Gun>('guns', (ref) =>
-        ref.orderBy('name').limit(this.pageSizes).startAfter(this.nextDocCursor)
-      )
-      .snapshotChanges()
-      .subscribe((x) => {
-        if (x.length) {
-          this.nextDocCursor = x[x.length - 1].payload.doc;
-          this.prevDocCursor = x[0].payload.doc;
-          this.prevPageStack.push(this.prevDocCursor);
-
-          this.guns = x.map((g) => {
-            return {
-              ...g.payload.doc.data(),
-            } as Gun;
-          });
-        }
-      });
-  }
-
-  prev(): void {
-    if (this.prevPageStack.length <= 1) return;
-
-    this.prevPageStack.pop();
-
-    this.prevDocCursor = this.prevPageStack[this.prevPageStack.length - 1];
-    this.angularFireStore
-      .collection<Gun>('guns', (ref) =>
-        ref.orderBy('name').limit(this.pageSizes).startAt(this.prevDocCursor)
-      )
-      .snapshotChanges()
-      .subscribe((x) => {
-        if (x) {
-          this.nextDocCursor = x[x.length - 1].payload.doc;
-          this.prevDocCursor = x[0].payload.doc;
-
-          this.guns = x.map((g) => {
-            return {
-              ...g.payload.doc.data(),
-            } as Gun;
-          });
-        }
-      });
   }
 
   async postCategory(
