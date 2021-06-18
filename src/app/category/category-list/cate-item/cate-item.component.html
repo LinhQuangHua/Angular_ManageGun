@@ -1,7 +1,9 @@
 <tr>
   <th scope="row">{{ index }}</th>
-  <td style="width: 30%">{{ cate.id }}</td>
-  <td style="width: 30%">{{ cate.name }}</td>
+  <div style="width: 30%;">
+    <td style="font-size: 14.5px;">{{ cate.id }}</td>
+  </div>
+  <td style="width: 30%; text-align: 'center' ">{{ cate.name }}</td>
   <td>
     <a (click)="onEditCate(cate.id)" class="btn btn-primary">Edit</a>&nbsp;
     <a (click)="onDeleteCate(cate.id)" class="btn btn-danger">Delete</a>

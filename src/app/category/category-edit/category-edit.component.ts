@@ -65,13 +65,13 @@ export class CategoryEditComponent implements OnInit {
         case UPDATE_SUCCESS:
           form.reset();
           this.toastr.success(
-            'Đã chỉnh sửa danh mục trong kho "hàng"',
+            'Đã chỉnh sửa danh mục trong danh sách',
             'Thành công !'
           );
           break;
         default:
           this.toastr.error(
-            'Thêm danh mục vào kho "hàng" đã không xảy ra suôn sẻ',
+            'Thêm danh mục vào danh sách đã không xảy ra',
             'Thất bại !'
           );
           break;
