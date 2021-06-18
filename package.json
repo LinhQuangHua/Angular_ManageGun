@@ -20,7 +20,6 @@
     "@angular/platform-browser": "~11.2.3",
     "@angular/platform-browser-dynamic": "~11.2.3",
     "@angular/router": "~11.2.3",
-    "bootstrap": "^4.6.0",
     "firebase": "^8.6.7",
     "ngx-toastr": "^14.0.0",
     "rxjs": "~6.6.0",
