@@ -1,68 +1,112 @@
-<h2 style="margin-top: 57px">Weapon of Information</h2>
-<hr />
 <div class="row">
   <div class="col-sm-12">
-    <form [formGroup]="gunForm" (ngSubmit)="onSubmit(gunForm)">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <input type="text" id="id" class="form-control" formControlName="id" [hidden]="true" disabled />
-            <label for="name">Gun Name</label>
-            <input type="text" id="name" class="form-control" formControlName="name" />
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title">Weapon's information</div>
+        <hr />
+        <form [formGroup]="gunForm" (ngSubmit)="onSubmit(gunForm)">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="id"
+                  class="form-control"
+                  formControlName="id"
+                  [hidden]="true"
+                  disabled
+                />
+                <label for="name">Gun Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control"
+                  formControlName="name"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <label for="price" id="price">Price</label>
-            <input type="number" id="price" class="form-control" formControlName="price" />
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="price" id="price">Price</label>
+                <input
+                  type="number"
+                  id="price"
+                  class="form-control"
+                  formControlName="price"
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <label for="price" id="price">Image</label>
-          <br>
-          <img [src]="imageUrl" class="img-fluid" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="form-group">
-            <button type="button" class="btn btn-primary w-100" (click)="imgPicker.click()">
-              UPLOAD IMAGE
-            </button>
-            <input type="file" (change)="onFileChange($event)" [hidden]="true" accept="image/*" #imgPicker />
+          <div class="row">
+            <div class="col-sm-12">
+              <label for="price" id="price">Image</label>
+              <br />
+              <img [src]="imageUrl" class="img-fluid" />
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <label for="category">Category :</label>
-            <select class="form-control" id="category" formControlName="category">
-              <option *ngFor="let category of this.gunService.categories" [value]="category.name"
-                (change)="onCategoryChange($event)">
-                {{ category.name }}
-              </option>
-            </select>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <button
+                  type="button"
+                  class="btn btn-light"
+                  (click)="imgPicker.click()"
+                >
+                  UPLOAD IMAGE
+                </button>
+                <input
+                  type="file"
+                  (change)="onFileChange($event)"
+                  [hidden]="true"
+                  accept="image/*"
+                  #imgPicker
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="form-group">
-            <label for="description">Description</label>
-            <textarea type="text" id="description" class="form-control" formControlName="description" rows="7">
-            </textarea>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="category">Category :</label>
+                <select
+                  class="form-control"
+                  id="category"
+                  formControlName="category"
+                >
+                  <option
+                    *ngFor="let category of this.gunService.categories"
+                    [value]="category.name"
+                    (change)="onCategoryChange($event)"
+                  >
+                    {{ category.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
           </div>
-        </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea
+                  type="text"
+                  id="description"
+                  class="form-control"
+                  formControlName="description"
+                  rows="7"
+                >
+                </textarea>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-light">Save</button>&nbsp;
+          <button type="button" class="btn btn-light" (click)="onCancel()">
+            Cancel
+          </button>
+        </form>
       </div>
-      <button type="submit" class="btn btn-success">Save</button>&nbsp;
-      <button type="button" class="btn btn-danger" (click)="onCancel()">
-        Cancel
-      </button>
-    </form>
+    </div>
   </div>
 </div>
