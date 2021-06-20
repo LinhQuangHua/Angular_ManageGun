@@ -7,14 +7,21 @@ import { RecipesComponent } from './recipes/recipes.component';
 import { CategoryComponent } from './category/category.component';
 import { CategoryEditComponent } from './category/category-edit/category-edit.component';
 import { LoginComponent } from './login/login.component';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: RecipeStartComponent, pathMatch: 'full' },
+  {
+    path: 'dashboard',
+    component: RecipeStartComponent,
+    pathMatch: 'full',
+    canActivate: [AngularFireAuthGuard],
+  },
   {
     path: 'gun',
     component: RecipesComponent,
+    canActivate: [AngularFireAuthGuard],
     children: [
       { path: 'new', component: RecipeEditComponent },
       { path: ':id', component: RecipeDetailComponent },
@@ -24,16 +31,16 @@ const appRoutes: Routes = [
   {
     path: 'category',
     component: CategoryComponent,
+    canActivate: [AngularFireAuthGuard],
     children: [
       { path: 'new', component: CategoryEditComponent },
       { path: ':id/edit', component: CategoryEditComponent },
     ],
   },
-
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
