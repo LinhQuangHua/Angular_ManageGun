@@ -20,6 +20,7 @@ export class RecipeEditComponent implements OnInit {
   isDisplay: boolean = false;
   isEditMode: boolean = false;
   imageUrl: string = '';
+  i: number = 0;
 
   gunForm: FormGroup = this.fb.group({
     id: [null],
@@ -83,12 +84,25 @@ export class RecipeEditComponent implements OnInit {
       });
     }
     //
-    if (this.gunForm.value['name'] === '' || this.gunForm.value['price'] === '' || this.gunForm.value['description'] === '' || this.gunForm.value['category'] === '') {
+
+    if (this.gunForm.value['name'] === '' || this.gunForm.value['price'] === '' || this.gunForm.value['description'] === '' || this.gunForm.value['category'] === '' || !this.imageUrl) {
       this.toastr.error('Vui lòng điền đầy đủ thông tin vào form', 'Thất bại !');
-      return;
-    }
-    else if (!this.imageUrl) {
-      this.toastr.error('Chưa chọn hình cho súng', 'Thất bại !');
+      if (this.gunForm.value['name'] === '') {
+        this.toastr.error('Vui lòng điền tên súng vào form', 'Thất bại !');
+      }
+      if (this.gunForm.value['price'] === '') {
+        this.toastr.error('Vui lòng điền giá súng vào form', 'Thất bại !');
+      }
+      if (this.gunForm.value['description'] === '') {
+        this.toastr.error('Vui lòng điền mô tả súng vào form', 'Thất bại !');
+      }
+      if (this.gunForm.value['category'] === '') {
+        this.toastr.error('Vui lòng chọn danh mục cho súng trong form', 'Thất bại !');
+      }
+      if (!this.imageUrl) {
+        this.toastr.error('Chưa chọn hình cho súng', 'Thất bại !');
+        return;
+      }
       return;
     }
 
