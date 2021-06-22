@@ -7,7 +7,12 @@ import { RecipesComponent } from './recipes/recipes.component';
 import { CategoryComponent } from './category/category.component';
 import { CategoryEditComponent } from './category/category-edit/category-edit.component';
 import { LoginComponent } from './login/login.component';
-import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
+import {
+  AngularFireAuthGuard,
+  redirectUnauthorizedTo,
+} from '@angular/fire/auth-guard';
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,12 +21,14 @@ const appRoutes: Routes = [
     path: 'dashboard',
     component: RecipeStartComponent,
     pathMatch: 'full',
-    canActivate: [AngularFireAuthGuard],
+    // canActivate: [AngularFireAuthGuard],
+    // data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   {
     path: 'gun',
     component: RecipesComponent,
     canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
     children: [
       { path: 'new', component: RecipeEditComponent },
       { path: ':id', component: RecipeDetailComponent },
@@ -32,6 +39,7 @@ const appRoutes: Routes = [
     path: 'category',
     component: CategoryComponent,
     canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
     children: [
       { path: 'new', component: CategoryEditComponent },
       { path: ':id/edit', component: CategoryEditComponent },

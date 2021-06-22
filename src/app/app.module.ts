@@ -18,6 +18,7 @@ import { CategoryListComponent } from './category/category-list/category-list.co
 import { CategoryEditComponent } from './category/category-edit/category-edit.component';
 import { CateItemComponent } from './category/category-list/cate-item/cate-item.component';
 import { ToastrModule } from 'ngx-toastr';
+import { PERSISTENCE } from '@angular/fire/auth';
 
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
@@ -61,7 +62,7 @@ import { LoginComponent } from './login/login.component';
       preventDuplicates: true,
     }),
   ],
-  providers: [],
+  providers: [{ provide: PERSISTENCE, useValue: 'session' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
