@@ -77,14 +77,14 @@ export class GunService {
           finalize(() => {
             fileRef.getDownloadURL().subscribe((x) => {
               gunToBeAdd.imagePath = x;
-              this.addOrUpdateGun(gunToBeAdd).catch(
-                (_) => (statusCode = CREATE_UPDATE_DELETE_FAILED)
-              );
             });
           })
         )
         .toPromise();
     }
+    this.addOrUpdateGun(gunToBeAdd).catch(
+      (_) => (statusCode = CREATE_UPDATE_DELETE_FAILED)
+    );
     return statusCode;
   }
 
