@@ -33,11 +33,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onLogin() {
+  async onLogin() {
     let username: string = this.loginForm.value['username'];
     let password: string = this.loginForm.value['password'];
 
-    this.registerWithEmail(username, password);
+    await this.loginWithEmail(username, password);
   }
 
   async loginWithGoogle() {
@@ -58,9 +58,9 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  async registerWithEmail(email: string, password: string) {
-    await this.authService.registerWithEmail(email, password).then((_) => {
-      this.loginWithEmail(email, password);
-    });
-  }
+  // async registerWithEmail(email: string, password: string) {
+  //   await this.authService.registerWithEmail(email, password).then((_) => {
+  //     this.loginWithEmail(email, password);
+  //   });
+  // }
 }
