@@ -1,4 +1,11 @@
+export interface Roles {
+  subscriber?: boolean;
+  editor?: boolean;
+  admin?: boolean;
+}
+
 export interface User {
-  displayName: string;
+  uid?: string;
   email: string;
+  roles?: Roles;
 }
