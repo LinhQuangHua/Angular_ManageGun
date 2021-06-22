@@ -34,10 +34,22 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    let username: string = this.loginForm.value['username'];
-    let password: string = this.loginForm.value['password'];
+    // let username: string = this.loginForm.value['username'];
+    // let password: string = this.loginForm.value['password'];
 
-    this.registerWithEmail(username, password);
+    // this.registerWithEmail(username, password);
+
+    if (this.loginForm.value['username'] === '' || this.loginForm.value['password'] === '') {
+      this.toastr.error('Vui lòng nhập username và password.', 'Lỗi đăng nhập!');
+    }
+    else {
+      if (this.loginForm.value['username'] === 'admin' && this.loginForm.value['password'] === '123456') {
+        this.router.navigate(['/dashboard'], { relativeTo: this.route }).then(result => { window.location.href = '/dashboard'; });;
+      }
+      else {
+        this.toastr.error('Sai username và password.', 'Lỗi đăng nhập!');
+      }
+    }
   }
 
   async loginWithGoogle() {
