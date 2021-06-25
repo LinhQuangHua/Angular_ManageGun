@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -37,7 +37,15 @@ export class LoginComponent implements OnInit {
     let username: string = this.loginForm.value['username'];
     let password: string = this.loginForm.value['password'];
 
+    if (this.loginForm.value['username'] === '' || this.loginForm.value['password'] === '') {
+      this.toastr.error('Vui lòng nhập username và password.', 'Lỗi đăng nhập!');
+    }
+    else if (this.loginForm.value['username'] != "admin@gmail.com" || this.loginForm.value['password'] != "123456") {
+      this.toastr.error('Sai username và password.', 'Lỗi đăng nhập!');
+    }
+
     await this.loginWithEmail(username, password);
+
   }
 
   async loginWithGoogle() {

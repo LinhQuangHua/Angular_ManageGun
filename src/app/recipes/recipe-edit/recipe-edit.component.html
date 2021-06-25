@@ -45,7 +45,7 @@
               <div class="form-group">
                 <label for="category">Category :</label>
                 <select class="form-control" id="category" formControlName="category">
-                  <option value="" disabled selected>gun's category...</option>
+                  <option value="" disabled selected>Unknow category</option>
                   <option *ngFor="let category of this.gunService.categories" [value]="category.name"
                     (change)="onCategoryChange($event)">
                     {{ category.name }}

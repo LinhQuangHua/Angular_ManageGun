@@ -162,7 +162,7 @@ export class GunService {
           .get()
           .subscribe((x) => {
             x.forEach((doc) => {
-              doc.ref.update({ category: '' });
+              doc.ref.update({ category: 'Unknow category' });
             });
           })
       )
