@@ -71,20 +71,24 @@ export class GunService {
         gunCreateModel.image
       );
 
-      await uploadTask
-        .snapshotChanges()
+      await uploadTask.snapshotChanges()
         .pipe(
           finalize(() => {
             fileRef.getDownloadURL().subscribe((x) => {
               gunToBeAdd.imagePath = x;
+              this.addOrUpdateGun(gunToBeAdd).catch(
+                (_) => (statusCode = CREATE_UPDATE_DELETE_FAILED)
+              );
             });
           })
         )
         .toPromise();
     }
-    this.addOrUpdateGun(gunToBeAdd).catch(
-      (_) => (statusCode = CREATE_UPDATE_DELETE_FAILED)
-    );
+    else{
+      this.addOrUpdateGun(gunToBeAdd).catch(
+        (_) => (statusCode = CREATE_UPDATE_DELETE_FAILED)
+      );
+    }
     return statusCode;
   }
 
@@ -95,12 +99,14 @@ export class GunService {
       return CREATE_UPDATE_DELETE_FAILED;
     }
 
+    if (existingGun.imagePath) {
     let fileRef = this.angularFireStorage.refFromURL(existingGun.imagePath);
+      await fileRef
+        .delete()
+        .toPromise()
+        .catch((err) => CREATE_UPDATE_DELETE_FAILED);
 
-    await fileRef
-      .delete()
-      .toPromise()
-      .catch((err) => CREATE_UPDATE_DELETE_FAILED);
+    }
 
     await this.angularFireStore
       .collection<Gun>('guns')
